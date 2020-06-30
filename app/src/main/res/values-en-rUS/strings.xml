@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VoiceAssistent</string>
+    <string name="question_field_text">Ask a question</string>
+    <string name="send_button_text">Send</string>
+
+    <string name="default_answer">Question understood. I think...</string>
+
+    <string-array name="questions">
+        <item name="hello">hello</item>
+        <item name="how_are_you">how are you</item>
+        <item name="what_are_you_doing">you doing</item>
+    </string-array>
+
+    <string-array name="answers">
+        <item name="hello">Hello!</item>
+        <item name="how_are_you">Not bad</item>
+        <item name="what_are_you_doing">Answering your questions</item>
+    </string-array>
+</resources>

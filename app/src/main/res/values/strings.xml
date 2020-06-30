@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">VoiceAssistent</string>
+    <string name="app_name">Голосовой помощник</string>
+    <string name="question_field_text">Задайте вопрос</string>
+    <string name="send_button_text">Отправить</string>
+
+    <string name="default_answer">Вопрос понял. Думаю...</string>
+
+    <string-array name="questions">
+        <item name="hello">привет</item>
+        <item name="how_are_you">дела</item>
+        <item name="what_are_you_doing">занимаешься</item>
+    </string-array>
+
+    <string-array name="answers">
+        <item name="hello">Привет!</item>
+        <item name="how_are_you">Не плохо</item>
+        <item name="what_are_you_doing">Отвечаю на вопросы</item>
+    </string-array>
 </resources>
