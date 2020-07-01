@@ -3,4 +3,6 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="user_bubble_color">#91F9F1</color>
+    <color name="assistant_bubble_color">#ECA640</color>
 </resources>

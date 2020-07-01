@@ -2,6 +2,8 @@ package com.example.voiceassistent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -10,12 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     protected Button sendButton;
     protected EditText questionText;
-    protected TextView chatWindow;
+    protected RecyclerView chatMessageList;
+    protected  MessageListAdapter messageListAdapter;
     protected TextToSpeech textToSpeech;
 
     @Override
@@ -24,7 +28,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         sendButton = findViewById(R.id.sendButton);
         questionText = findViewById(R.id.questionField);
-        chatWindow = findViewById(R.id.chatWindow);
+        chatMessageList = findViewById(R.id.chatMessageList);
+        messageListAdapter = new MessageListAdapter();
+        chatMessageList.setLayoutManager(new LinearLayoutManager(this));
+        chatMessageList.setAdapter(messageListAdapter);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,25 +57,26 @@ public class MainActivity extends AppCompatActivity {
     {
         String question = questionText.getText().toString();
         questionText.getText().clear();
-        chatWindow.append(question.trim());
-        chatWindow.append("\n");
+        messageListAdapter.messageList.add(new Message(question, true));
 
         String answer = AI.getAnswer(question);
-        chatWindow.append(answer);
-        chatWindow.append("\n");
+        messageListAdapter.messageList.add(new Message(answer, false));
+
+        messageListAdapter.notifyDataSetChanged();
+        chatMessageList.scrollToPosition(messageListAdapter.getItemCount() - 1);
 
         textToSpeech.speak(answer, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putCharSequence("messages", chatWindow.getText());
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        chatWindow.setText(savedInstanceState.getCharSequence("messages"));
-        super.onRestoreInstanceState(savedInstanceState);
-    }
+//    @Override
+//    protected void onSaveInstanceState(@NonNull Bundle outState) {
+//        outState.put("messages", messageListAdapter.messageList);
+//        super.onSaveInstanceState(outState);
+//    }
+//
+//    @Override
+//    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+//        chatWindow.setText(savedInstanceState.getCharSequence("messages"));
+//        super.onRestoreInstanceState(savedInstanceState);
+//    }
 }
