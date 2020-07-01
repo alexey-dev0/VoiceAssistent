@@ -5,7 +5,7 @@
 
     <string name="default_answer">Вопрос понял. Думаю...</string>
     <string name="user_icon_desc">Иконка пользователя</string>
-    <string name="user_name">Пользователь</string>
+    <string name="user_name">Вы</string>
     <string name="assistant_name">Помощник</string>
     <string name="assistant_icon_desc">Иконка помощника</string>
 

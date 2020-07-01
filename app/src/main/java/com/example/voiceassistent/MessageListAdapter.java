@@ -15,7 +15,15 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int ASSISTANT_TYPE = 0;
     private static final int USER_TYPE = 1;
 
-    protected List<Message> messageList = new ArrayList<>();
+    protected ArrayList<Message> messageList;
+
+    public MessageListAdapter() {
+        messageList = new ArrayList<>();
+    }
+
+    public MessageListAdapter(List<Message> messageList) {
+        this.messageList = (ArrayList<Message>) messageList;
+    }
 
     @NonNull
     @Override

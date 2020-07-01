@@ -7,7 +7,8 @@
     android:weightSum="1"
     android:padding="@dimen/main_padding"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/background">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatMessageList"
@@ -15,24 +16,31 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:textAlignment="gravity"
-        android:gravity="start|bottom"
-        android:textSize="@dimen/chat_size" />
+        android:gravity="start|bottom"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:padding="@dimen/input_padding">
         <EditText
             android:id="@+id/questionField"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.6"
-            android:hint="@string/question_field_text" />
+            android:hint="@string/question_field_text"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/text_color_shadow"
+            android:inputType="textAutoCorrect"
+            android:importantForAutofill="no"
+            android:imeOptions="actionDone"/>
         <Button
             android:id="@+id/sendButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:text="@string/send_button_text" />
+            android:text="@string/send_button_text"
+            android:background="@drawable/button_background"
+            android:textColor="@color/text_color" />
     </LinearLayout>
 </LinearLayout>

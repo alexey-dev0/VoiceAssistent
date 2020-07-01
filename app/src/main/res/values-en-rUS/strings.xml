@@ -18,7 +18,7 @@
         <item name="what_are_you_doing">Answering your questions</item>
     </string-array>
     <string name="user_icon_desc">User icon</string>
-    <string name="user_name">User</string>
+    <string name="user_name">You</string>
     <string name="assistant_name">Assistant</string>
     <string name="assistant_icon_desc">Assistant icon</string>
 </resources>
