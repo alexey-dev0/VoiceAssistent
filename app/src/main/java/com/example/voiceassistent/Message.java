@@ -3,22 +3,11 @@ package com.example.voiceassistent;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Message implements Parcelable {
-    public String text;
-    public Date date;
-    public Boolean isSend;
-
-    public Message(String text, Boolean isSend) {
-        this.text = text;
-        this.isSend = isSend;
-        this.date = new Date();
-    }
-
     public static final Creator<Message> CREATOR = new Creator<Message>() {
         @Override
         public Message createFromParcel(Parcel source) {
@@ -40,6 +29,15 @@ public class Message implements Parcelable {
             return new Message[size];
         }
     };
+    public String text;
+    public Date date;
+    public Boolean isSend;
+
+    public Message(String text, Boolean isSend) {
+        this.text = text;
+        this.isSend = isSend;
+        this.date = new Date();
+    }
 
     @Override
     public int describeContents() {

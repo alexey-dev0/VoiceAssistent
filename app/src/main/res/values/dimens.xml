@@ -6,9 +6,10 @@
     <dimen name="bubble_arrow_width">10dp</dimen>
     <dimen name="arrow_pos">10dp</dimen>
 
-    <dimen name="message_bubble_padding">12dp</dimen>
     <dimen name="main_margin">3dp</dimen>
+    <dimen name="message_bubble_padding">12dp</dimen>
     <dimen name="message_bubble_margin">8dp</dimen>
+    <dimen name="message_bubble_width">280dp</dimen>
 
     <dimen name="message_text_size">20sp</dimen>
     <dimen name="name_text_size">16sp</dimen>

@@ -11,12 +11,12 @@
         android:layout_height="@dimen/image_size"
         android:layout_marginStart="@dimen/message_bubble_margin"
         android:layout_marginTop="@dimen/message_bubble_margin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/assistant_icon"
-        android:contentDescription="@string/assistant_icon_desc"
         android:background="@drawable/icon_background"
-        android:padding="@dimen/icon_padding"/>
+        android:contentDescription="@string/assistant_icon_desc"
+        android:padding="@dimen/icon_padding"
+        android:src="@drawable/assistant_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/assistant_name_view"
@@ -24,26 +24,26 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/message_bubble_margin"
         android:layout_marginTop="@dimen/message_bubble_margin"
-        app:layout_constraintStart_toEndOf="@id/assistant_image"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="@dimen/name_text_size"
         android:text="@string/assistant_name"
-        android:textColor="@color/text_color"/>
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/name_text_size"
+        app:layout_constraintStart_toEndOf="@id/assistant_image"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.github.library.bubbleview.BubbleTextView
         android:id="@+id/message_view"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/message_bubble_width"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/message_bubble_margin"
         android:layout_marginTop="@dimen/message_bubble_margin"
-        app:layout_constraintStart_toEndOf="@id/assistant_image"
-        app:layout_constraintTop_toBottomOf="@id/assistant_name_view"
         android:padding="@dimen/message_bubble_padding"
+        android:textColor="@color/text_color_dark"
         android:textSize="@dimen/message_text_size"
         app:arrowPosition="@dimen/arrow_pos"
         app:arrowWidth="10dp"
         app:bubbleColor="@color/assistant_bubble_color"
-        android:textColor="@color/text_color_dark"/>
+        app:layout_constraintStart_toEndOf="@id/assistant_image"
+        app:layout_constraintTop_toBottomOf="@id/assistant_name_view" />
 
     <TextView
         android:id="@+id/message_date_view"
@@ -51,9 +51,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/message_bubble_margin"
         android:layout_marginTop="@dimen/message_bubble_margin"
-        app:layout_constraintStart_toEndOf="@id/assistant_image"
-        app:layout_constraintTop_toBottomOf="@id/message_view"
+        android:textColor="@color/text_color_shadow"
         android:textSize="@dimen/date_text_size"
-        android:textColor="@color/text_color_shadow"/>
+        app:layout_constraintStart_toEndOf="@id/assistant_image"
+        app:layout_constraintTop_toBottomOf="@id/message_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

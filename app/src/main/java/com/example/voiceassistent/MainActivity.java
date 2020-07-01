@@ -1,10 +1,5 @@
 package com.example.voiceassistent;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.KeyEvent;
@@ -13,6 +8,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Consumer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -65,28 +66,30 @@ public class MainActivity extends AppCompatActivity {
 
         textToSpeech = new TextToSpeech(getApplicationContext(),
                 new TextToSpeech.OnInitListener() {
-                        @Override
-                        public void onInit(int status) {
-                            if (status != TextToSpeech.ERROR) {
-                                textToSpeech.setLanguage(new Locale("ru"));
-                            }
+                    @Override
+                    public void onInit(int status) {
+                        if (status != TextToSpeech.ERROR) {
+                            textToSpeech.setLanguage(new Locale("ru"));
                         }
-        });
+                    }
+                });
     }
 
-    protected void onSend()
-    {
+    protected void onSend() {
         String question = questionText.getText().toString();
         questionText.getText().clear();
         messageListAdapter.messageList.add(new Message(question, true));
 
-        String answer = AI.getAnswer(question);
-        messageListAdapter.messageList.add(new Message(answer, false));
+        AI.getAnswer(question, new Consumer<String>() {
+            @Override
+            public void accept(String s) {
+                messageListAdapter.messageList.add(new Message(s, false));
+                messageListAdapter.notifyDataSetChanged();
+                chatMessageList.scrollToPosition(messageListAdapter.getItemCount() - 1);
 
-        messageListAdapter.notifyDataSetChanged();
-        chatMessageList.scrollToPosition(messageListAdapter.getItemCount() - 1);
-
-        textToSpeech.speak(answer, TextToSpeech.QUEUE_FLUSH, null, null);
+                textToSpeech.speak(s, TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+        });
     }
 
     @Override
