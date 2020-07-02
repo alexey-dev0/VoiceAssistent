@@ -18,7 +18,7 @@ public class QuestionForecast extends QuestionHandler {
 
     @Override
     public Boolean handle(String userQuestion, Consumer<String> callback) {
-        String question = context.getResources().getString(R.string.question_forecast) + "(.+)";
+        String question = context.getResources().getString(R.string.question_forecast) + " (.+)";
 
         Pattern cityPattern = Pattern.compile(question, Pattern.CASE_INSENSITIVE);
 

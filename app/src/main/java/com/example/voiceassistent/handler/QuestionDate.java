@@ -50,7 +50,7 @@ public class QuestionDate extends QuestionHandler {
 
         if (!pattern.equals("")) {
             String date = getDate(new SimpleDateFormat(pattern, locale), quest_by_dayX);
-            String answer = prefix + date;
+            String answer = prefix + " " + date;
             callback.accept(answer);
             return true;
         }
