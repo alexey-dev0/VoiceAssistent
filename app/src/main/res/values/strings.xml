@@ -3,21 +3,40 @@
     <string name="question_field_text">Задайте вопрос</string>
     <string name="send_button_text">Отправить</string>
 
-    <string name="default_answer">Вопрос понял. Думаю...</string>
+    <string name="default_answer">Не понял</string>
     <string name="user_icon_desc">Иконка пользователя</string>
     <string name="user_name">Вы</string>
     <string name="assistant_name">Помощник</string>
     <string name="assistant_icon_desc">Иконка помощника</string>
 
-    <string-array name="questions">
+    <string-array name="questions_standard">
         <item name="hello">привет</item>
         <item name="how_are_you">дела</item>
         <item name="what_are_you_doing">занимаешься</item>
     </string-array>
 
-    <string-array name="answers">
+    <string-array name="answers_standard">
         <item name="hello">Привет!</item>
         <item name="how_are_you">Не плохо</item>
         <item name="what_are_you_doing">Отвечаю на вопросы</item>
     </string-array>
+
+    <string name="question_help">помощь</string>
+    <string name="answer_help">Сам разбирайся</string>
+
+    <string name="question_today">сегодня</string>
+    <string name="answer_today">Cегодня </string>
+
+    <string name="question_dayOfWeek">день недели</string>
+    <string name="answer_dayOfWeek">День недели </string>
+
+    <string name="question_hour">час</string>
+    <string name="answer_hour">Сейчас </string>
+
+    <string name="question_by_x_day">дней до зачета</string>
+    <string name="answer_by_x_day">Дней до зачета </string>
+
+    <string name="question_forecast">погода в городе </string>
+    <string name="message_think">Думаю </string>
+
 </resources>

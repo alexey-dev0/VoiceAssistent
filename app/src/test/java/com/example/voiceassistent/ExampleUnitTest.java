@@ -1,8 +1,10 @@
 package com.example.voiceassistent;
 
+import com.example.voiceassistent.service.ParsingHtmlService;
+
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -13,5 +15,10 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
+    }
+
+    @Test
+    public void holidays() {
+        System.out.println(ParsingHtmlService.getHoliday("04.08.2020"));
     }
 }

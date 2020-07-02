@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.voiceassistent.model.Message;
+
 import java.util.ArrayList;
 import java.util.List;
 

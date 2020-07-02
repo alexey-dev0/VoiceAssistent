@@ -32,7 +32,7 @@
 
     <com.github.library.bubbleview.BubbleTextView
         android:id="@+id/message_view"
-        android:layout_width="@dimen/message_bubble_width"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/message_bubble_margin"
         android:layout_marginTop="@dimen/message_bubble_margin"
@@ -41,7 +41,7 @@
         android:textSize="@dimen/message_text_size"
         app:arrowPosition="@dimen/arrow_pos"
         app:arrowWidth="10dp"
-        app:bubbleColor="@color/assistant_bubble_color"
+        app:bubbleColor="@color/darkTheme_colorAccent"
         app:layout_constraintStart_toEndOf="@id/assistant_image"
         app:layout_constraintTop_toBottomOf="@id/assistant_name_view" />
 

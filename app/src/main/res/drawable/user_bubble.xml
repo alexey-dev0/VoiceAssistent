@@ -4,6 +4,6 @@
     android:layout_height="match_parent"
     android:shape="rectangle">
 
-    <solid android:color="@color/user_bubble_color" />
+    <solid android:color="@color/darkTheme_colorPrimaryDark" />
     <corners android:radius="20dp" />
 </shape>

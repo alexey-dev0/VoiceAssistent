@@ -37,4 +37,5 @@ dependencies {
     implementation 'com.github.lguipeng:BubbleView:1.0.1'
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
+    implementation 'org.jsoup:jsoup:1.12.1'
 }

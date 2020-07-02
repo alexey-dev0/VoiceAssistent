@@ -1,4 +1,4 @@
-package com.example.voiceassistent;
+package com.example.voiceassistent.service;
 
 import android.util.Log;
 

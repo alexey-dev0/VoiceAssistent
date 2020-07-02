@@ -1,22 +1,25 @@
 package com.example.voiceassistent;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
-import android.view.KeyEvent;
-import android.view.View;
+import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.util.Consumer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.voiceassistent.model.Message;
+
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     protected Button sendButton;
@@ -31,23 +34,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         sendButton = findViewById(R.id.sendButton);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSend();
-            }
-        });
+        sendButton.setOnClickListener(v -> onSend());
 
         questionText = findViewById(R.id.questionField);
-        questionText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    sendButton.performClick();
-                    return true;
-                }
-                return false;
+        questionText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                sendButton.performClick();
+                return true;
             }
+            return false;
         });
 
         chatMessageList = findViewById(R.id.chatMessageList);
@@ -60,35 +55,73 @@ public class MainActivity extends AppCompatActivity {
         }
         chatMessageList.setLayoutManager(new LinearLayoutManager(this));
         chatMessageList.setAdapter(messageListAdapter);
-        chatMessageList.scrollToPosition(messageListAdapter.getItemCount() - 1);
+        scrollDown();
 
         AI.initialize(this);
 
         textToSpeech = new TextToSpeech(getApplicationContext(),
-                new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(int status) {
-                        if (status != TextToSpeech.ERROR) {
-                            textToSpeech.setLanguage(new Locale("ru"));
-                        }
+                status -> {
+                    if (status != TextToSpeech.ERROR) {
+                        textToSpeech.setLanguage(new Locale("ru"));
                     }
                 });
     }
 
+    protected void startTimer() {
+        String messageThinking = getResources().getString(R.string.message_think);
+        messageListAdapter.messageList.add(new Message(messageThinking, false));
+        scrollDown();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.obtainMessage().sendToTarget();
+            }
+        }, 1000, 1000);
+        sendButton.setEnabled(false);
+        sendButton.setTextColor(getResources().getColor(R.color.text_color_shadow));
+    }
+
+    protected  void stopTimer() {
+        timer.cancel();
+        timer = new Timer();
+        messageListAdapter.messageList.remove(messageListAdapter.getItemCount() - 1);
+        sendButton.setEnabled(true);
+        sendButton.setTextColor(getResources().getColor(R.color.text_color));
+    }
+
+    @SuppressLint("HandlerLeak")
+    public Handler mHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            if (messageListAdapter.getItemCount() == 0) return;
+            Log.w("TIMER_TICK", "TICK");
+            messageListAdapter.messageList.get(messageListAdapter.getItemCount() - 1).text += "\uD83E\uDD14";
+            scrollDown();
+        }
+    };
+
+    protected static Timer timer = new Timer();
+
+    protected void scrollDown()
+    {
+        if (messageListAdapter.getItemCount() == 0) return;
+        messageListAdapter.notifyDataSetChanged();
+        chatMessageList.smoothScrollToPosition(messageListAdapter.getItemCount() - 1);
+    }
+
     protected void onSend() {
         String question = questionText.getText().toString();
+        if (question.isEmpty()) return;
         questionText.getText().clear();
         messageListAdapter.messageList.add(new Message(question, true));
 
-        AI.getAnswer(question, new Consumer<String>() {
-            @Override
-            public void accept(String s) {
-                messageListAdapter.messageList.add(new Message(s, false));
-                messageListAdapter.notifyDataSetChanged();
-                chatMessageList.scrollToPosition(messageListAdapter.getItemCount() - 1);
+        startTimer();
 
-                textToSpeech.speak(s, TextToSpeech.QUEUE_FLUSH, null, null);
-            }
+        AI.getAnswer(question, s -> {
+            stopTimer();
+            messageListAdapter.messageList.add(new Message(s, false));
+            scrollDown();
+
+            textToSpeech.speak(s, TextToSpeech.QUEUE_FLUSH, null, null);
         });
     }
 

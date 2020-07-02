@@ -1,4 +1,4 @@
-package com.example.voiceassistent;
+package com.example.voiceassistent.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

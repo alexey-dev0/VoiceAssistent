@@ -1,4 +1,4 @@
-package com.example.voiceassistent;
+package com.example.voiceassistent.service;
 
 import android.util.Log;
 
@@ -6,7 +6,6 @@ import androidx.core.util.Consumer;
 
 import com.example.voiceassistent.api.ForecastApi;
 import com.example.voiceassistent.model.Forecast;
-import com.example.voiceassistent.service.ForecastService;
 
 import retrofit2.Call;
 import retrofit2.Callback;

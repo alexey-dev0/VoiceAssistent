@@ -4,7 +4,7 @@
     <string name="question_field_text">Ask a question</string>
     <string name="send_button_text">Send</string>
 
-    <string name="default_answer">Question understood. I think...</string>
+    <string name="default_answer">What?</string>
 
     <string-array name="questions">
         <item name="hello">hello</item>
@@ -21,4 +21,6 @@
     <string name="user_name">You</string>
     <string name="assistant_name">Assistant</string>
     <string name="assistant_icon_desc">Assistant icon</string>
+    <string name="question_help">Help</string>
+    <string name="answer_help">Deal it yourself</string>
 </resources>
