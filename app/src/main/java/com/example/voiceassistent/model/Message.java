@@ -3,6 +3,8 @@ package com.example.voiceassistent.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.voiceassistent.entity.MessageEntity;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,6 +31,7 @@ public class Message implements Parcelable {
             return new Message[size];
         }
     };
+
     public String text;
     public Date date;
     public Boolean isSend;
@@ -37,6 +40,12 @@ public class Message implements Parcelable {
         this.text = text;
         this.isSend = isSend;
         this.date = new Date();
+    }
+
+    public Message(MessageEntity entity) throws ParseException {
+        this.text = entity.text;
+        this.isSend = (entity.isSend == 1);
+        this.date = new SimpleDateFormat("yyyy.MM.dd HH:mm").parse(entity.date);
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.example.voiceassistent;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
@@ -19,8 +22,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.voiceassistent.entity.MessageEntity;
+import com.example.voiceassistent.helper.DBHelper;
 import com.example.voiceassistent.model.Message;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Timer;
@@ -47,8 +53,14 @@ public class MainActivity extends AppCompatActivity {
     private boolean isLight = true;
     private String THEME = "THEME";
 
+    DBHelper dbHelper;
+    SQLiteDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        dbHelper = new DBHelper(this);
+        db = dbHelper.getWritableDatabase();
+
         sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
 
         if (sPref.contains(THEME)) {
@@ -95,6 +107,28 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         scrollDown();
+
+        // get msg from db
+        if (savedInstanceState == null) {
+            Cursor cursor = db.query(DBHelper.TABLE_MESSAGES, null, null, null, null, null,null);
+            if (cursor.moveToFirst()) {
+                int messageIndex = cursor.getColumnIndex(DBHelper.FIELD_MESSAGE);
+                int dataIndex = cursor.getColumnIndex(DBHelper.FIELD_DATE);
+                int sendIndex = cursor.getColumnIndex(DBHelper.FIELD_SEND);
+
+                do {
+                    MessageEntity entity = new MessageEntity(cursor.getString(messageIndex),
+                            cursor.getString(dataIndex), cursor.getInt(sendIndex));
+                    try {
+                        Message message = new Message(entity);
+                        messageListAdapter.messageList.add(message);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
     }
 
     protected void startTimer() {
@@ -175,9 +209,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+
+        // save theme
         SharedPreferences.Editor editor = sPref.edit();
         editor.putBoolean(THEME, isLight);
         editor.apply();
+
+        // db
+        db.delete(DBHelper.TABLE_MESSAGES, null, null);
+
+        ArrayList<Message> messages = messageListAdapter.messageList;
+        for (int i = 0; i < messages.size(); i++) {
+            MessageEntity entity = new MessageEntity(messageListAdapter.messageList.get(i));
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DBHelper.FIELD_MESSAGE, entity.text);
+            contentValues.put(DBHelper.FIELD_SEND, entity.isSend);
+            contentValues.put(DBHelper.FIELD_DATE, entity.date);
+
+            db.insert(DBHelper.TABLE_MESSAGES, null, contentValues);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
     }
 
     @Override
