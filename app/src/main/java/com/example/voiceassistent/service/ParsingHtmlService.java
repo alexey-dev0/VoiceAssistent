@@ -1,12 +1,9 @@
 package com.example.voiceassistent.service;
 
-import android.util.Log;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.Console;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +12,10 @@ import java.util.Locale;
 
 public class ParsingHtmlService {
     private static final String URL = "http://mirkosmosa.ru/holiday/2020";
+    private static SimpleDateFormat longSdf = new SimpleDateFormat("dd MMMM yyyy",
+            new Locale("ru"));
+    private static SimpleDateFormat shortSdf = new SimpleDateFormat("dd.MM.yyyy",
+            new Locale("ru"));
 
     public static String getHoliday(String dateString) {
         Date date = shortStringToDate(dateString);
@@ -32,12 +33,6 @@ public class ParsingHtmlService {
         }
         return "NONE";
     }
-
-    private static SimpleDateFormat longSdf = new SimpleDateFormat("dd MMMM yyyy",
-            new Locale("ru"));
-
-    private static SimpleDateFormat shortSdf = new SimpleDateFormat("dd.MM.yyyy",
-            new Locale("ru"));
 
     private static String dateToString(Date date) {
         return longSdf.format(date);

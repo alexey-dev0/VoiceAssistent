@@ -41,5 +41,8 @@
 
     <string name="question_forecast">погода в городе</string>
     <string name="message_think">Думаю</string>
+    <string name="answer_forecast_now">Сейчас где-то</string>
+    <string name="answer_forecast_none">Не могу узнать погоду</string>
+    <string name="question_translate">переведи</string>
 
 </resources>

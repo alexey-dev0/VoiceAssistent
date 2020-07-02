@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.core.util.Consumer;
 
+import com.example.voiceassistent.R;
 import com.example.voiceassistent.service.TranslateToString;
 
 import java.util.regex.Matcher;
@@ -16,11 +17,12 @@ public class QuestionTranslate extends QuestionHandler {
 
     @Override
     public Boolean handle(String question, Consumer<String> callback) {
-        Pattern translatePattern = Pattern.compile("переведи (.+)");
+        String msgTranslate = context.getResources().getString(R.string.question_translate);
+        Pattern translatePattern = Pattern.compile(msgTranslate + " (.+)");
         Matcher matcher = translatePattern.matcher(question);
         if (matcher.find()) {
             final String[] text = {matcher.group(1)};
-            TranslateToString.getTranslate(text[0], callback);
+            TranslateToString.getTranslate(text[0], locale, callback);
             return true;
         }
         return false;

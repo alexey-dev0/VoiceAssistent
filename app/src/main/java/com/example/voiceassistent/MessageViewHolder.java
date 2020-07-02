@@ -37,7 +37,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         return metrics;
     }
 
-    private void setMessageBubbleMaxWidth(int displayWidthPixels){
+    private void setMessageBubbleMaxWidth(int displayWidthPixels) {
         messageText.setMaxWidth(2 * displayWidthPixels / 3);
     }
 

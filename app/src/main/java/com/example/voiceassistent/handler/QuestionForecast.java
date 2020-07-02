@@ -27,7 +27,7 @@ public class QuestionForecast extends QuestionHandler {
             String cityName = matcher.group(1);
 
             Log.w("WEATHER", cityName);
-            ForecastToString.getForecast(cityName, callback);
+            ForecastToString.getForecast(cityName, context, locale, callback);
             return true;
         }
 

@@ -30,7 +30,7 @@
             android:layout_weight="0.6"
             android:backgroundTint="@color/colorAccent"
             android:hint="@string/question_field_text"
-            android:imeOptions="actionDone"
+            android:imeOptions="actionDone|flagNoExtractUi"
             android:importantForAutofill="no"
             android:inputType="textAutoCorrect"
             android:textColor="@color/light_text_color"

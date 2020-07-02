@@ -8,6 +8,7 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,14 +28,22 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     public static final String APP_PREFERENCES = "AI_settings";
-    SharedPreferences sPref;
-
+    protected static Timer timer = new Timer();
     protected Button sendButton;
     protected EditText questionText;
     protected RecyclerView chatMessageList;
     protected MessageListAdapter messageListAdapter;
+    @SuppressLint("HandlerLeak")
+    public Handler mHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            if (messageListAdapter.getItemCount() == 0) return;
+            Log.w("TIMER_TICK", "TICK");
+            messageListAdapter.messageList.get(messageListAdapter.getItemCount() - 1).text += "\uD83E\uDD14";
+            scrollDown();
+        }
+    };
     protected TextToSpeech textToSpeech;
-
+    SharedPreferences sPref;
     private boolean isLight = true;
     private String THEME = "THEME";
 
@@ -51,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED);
 
         sendButton = findViewById(R.id.sendButton);
         sendButton.setOnClickListener(v -> onSend());
@@ -73,17 +83,18 @@ public class MainActivity extends AppCompatActivity {
             messageListAdapter = new MessageListAdapter();
         }
         chatMessageList.setLayoutManager(new LinearLayoutManager(this));
+        ((LinearLayoutManager) chatMessageList.getLayoutManager()).setStackFromEnd(true);
         chatMessageList.setAdapter(messageListAdapter);
-        scrollDown();
 
         AI.initialize(this);
-
         textToSpeech = new TextToSpeech(getApplicationContext(),
                 status -> {
                     if (status != TextToSpeech.ERROR) {
                         textToSpeech.setLanguage(new Locale("ru"));
                     }
                 });
+
+        scrollDown();
     }
 
     protected void startTimer() {
@@ -97,31 +108,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 1000, 1000);
         sendButton.setEnabled(false);
-        sendButton.setTextColor(getResources().getColor(R.color.light_text_color_shadow));
+        sendButton.setTextColor(getResources().getColor(R.color.light_text_color));
     }
 
-    protected  void stopTimer() {
+    protected void stopTimer() {
         timer.cancel();
         timer = new Timer();
         messageListAdapter.messageList.remove(messageListAdapter.getItemCount() - 1);
         sendButton.setEnabled(true);
-        sendButton.setTextColor(getResources().getColor(R.color.light_text_color));
+        sendButton.setTextColor(getResources().getColor(R.color.light_text_color_shadow));
     }
 
-    @SuppressLint("HandlerLeak")
-    public Handler mHandler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            if (messageListAdapter.getItemCount() == 0) return;
-            Log.w("TIMER_TICK", "TICK");
-            messageListAdapter.messageList.get(messageListAdapter.getItemCount() - 1).text += "\uD83E\uDD14";
-            scrollDown();
-        }
-    };
-
-    protected static Timer timer = new Timer();
-
-    protected void scrollDown()
-    {
+    protected void scrollDown() {
         if (messageListAdapter.getItemCount() == 0) return;
         messageListAdapter.notifyDataSetChanged();
         chatMessageList.smoothScrollToPosition(messageListAdapter.getItemCount() - 1);
@@ -180,5 +178,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sPref.edit();
         editor.putBoolean(THEME, isLight);
         editor.apply();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        scrollDown();
     }
 }
