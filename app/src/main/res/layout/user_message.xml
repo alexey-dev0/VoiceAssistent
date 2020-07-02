@@ -25,7 +25,7 @@
         android:layout_marginEnd="@dimen/message_bubble_margin"
         android:text="@string/user_name"
         android:textAlignment="viewEnd"
-        android:textColor="@color/text_color"
+        android:textColor="@color/light_text_color"
         android:textSize="@dimen/name_text_size"
         app:layout_constraintEnd_toStartOf="@id/user_image"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,12 +37,12 @@
         android:layout_marginTop="@dimen/message_bubble_margin"
         android:layout_marginEnd="@dimen/message_bubble_margin"
         android:padding="@dimen/message_bubble_padding"
-        android:textColor="@color/text_color"
+        android:textColor="@color/light_text_color"
         android:textSize="@dimen/message_text_size"
         app:arrowLocation="right"
         app:arrowPosition="@dimen/arrow_pos"
         app:arrowWidth="10dp"
-        app:bubbleColor="@color/darkTheme_colorPrimaryDark"
+        app:bubbleColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toStartOf="@id/user_image"
         app:layout_constraintTop_toBottomOf="@id/user_name_view" />
 
@@ -53,7 +53,7 @@
         android:layout_marginTop="@dimen/message_bubble_margin"
         android:layout_marginEnd="@dimen/message_bubble_margin"
         android:textAlignment="viewEnd"
-        android:textColor="@color/text_color_shadow"
+        android:textColor="@color/light_text_color_shadow"
         android:textSize="@dimen/date_text_size"
         app:layout_constraintEnd_toStartOf="@id/user_image"
         app:layout_constraintTop_toBottomOf="@id/message_view" />

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkTheme_colorPrimary"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:padding="@dimen/main_padding"
     android:weightSum="1"
@@ -28,13 +28,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.6"
-            android:backgroundTint="@color/darkTheme_colorAccent"
+            android:backgroundTint="@color/colorAccent"
             android:hint="@string/question_field_text"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
             android:inputType="textAutoCorrect"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color_shadow" />
+            android:textColor="@color/light_text_color"
+            android:textColorHint="@color/light_text_color_shadow" />
 
         <Button
             android:id="@+id/sendButton"
@@ -43,6 +43,6 @@
             android:layout_weight="0.4"
             android:background="@drawable/button_background"
             android:text="@string/send_button_text"
-            android:textColor="@color/text_color" />
+            android:textColor="@color/light_text_color" />
     </LinearLayout>
 </LinearLayout>

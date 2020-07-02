@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="darkTheme_colorPrimary">#323232</color>
-    <color name="darkTheme_colorPrimaryDark">#1E1E1E</color>
-    <color name="darkTheme_colorPrimaryLight">#464646</color>
-    <color name="darkTheme_colorAccent">#FFED50</color>
+    <color name="colorPrimary">#323232</color>
+    <color name="colorPrimaryDark">#1E1E1E</color>
+    <color name="colorPrimaryLight">#464646</color>
+    <color name="colorAccent">#FFED50</color>
 
-    <color name="gfbackground">#323232</color>
-    <color name="text_color">#DCDCDC</color>
-    <color name="text_color_shadow">#A0A0A0</color>
-    <color name="text_color_light">#FFFFFF</color>
-    <color name="text_color_dark">#3C3C3C</color>
+    <color name="light_text_color">#DCDCDC</color>
+    <color name="light_text_color_shadow">#A0A0A0</color>
+    <color name="light_text_color_light">#FFFFFF</color>
+
+    <color name="dark_text_color">#3C3C3C</color>
 </resources>

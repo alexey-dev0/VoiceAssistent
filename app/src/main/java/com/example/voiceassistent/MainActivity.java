@@ -1,16 +1,20 @@
 package com.example.voiceassistent;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,14 +26,29 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String APP_PREFERENCES = "AI_settings";
+    SharedPreferences sPref;
+
     protected Button sendButton;
     protected EditText questionText;
     protected RecyclerView chatMessageList;
     protected MessageListAdapter messageListAdapter;
     protected TextToSpeech textToSpeech;
 
+    private boolean isLight = true;
+    private String THEME = "THEME";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sPref = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+
+        if (sPref.contains(THEME)) {
+            isLight = sPref.getBoolean(THEME, true);
+            if (!isLight) {
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -78,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 1000, 1000);
         sendButton.setEnabled(false);
-        sendButton.setTextColor(getResources().getColor(R.color.text_color_shadow));
+        sendButton.setTextColor(getResources().getColor(R.color.light_text_color_shadow));
     }
 
     protected  void stopTimer() {
@@ -86,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         timer = new Timer();
         messageListAdapter.messageList.remove(messageListAdapter.getItemCount() - 1);
         sendButton.setEnabled(true);
-        sendButton.setTextColor(getResources().getColor(R.color.text_color));
+        sendButton.setTextColor(getResources().getColor(R.color.light_text_color));
     }
 
     @SuppressLint("HandlerLeak")
@@ -130,5 +149,36 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         outState.putParcelableArrayList("messageList", messageListAdapter.messageList);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.day_setting:
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                isLight = true;
+                break;
+            case R.id.night_setting:
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                isLight = false;
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences.Editor editor = sPref.edit();
+        editor.putBoolean(THEME, isLight);
+        editor.apply();
     }
 }
