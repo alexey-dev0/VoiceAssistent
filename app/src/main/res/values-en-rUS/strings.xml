@@ -36,4 +36,13 @@
     <string name="message_think">Thinking</string>
     <string name="day_setting">Daytime theme</string>
     <string name="night_setting">Night theme</string>
+    <string name="answer_forecast_now">Now is</string>
+    <string name="answer_forecast_none">Cannot get forecast</string>
+    <string name="question_translate">translate</string>
+    <string name="question_holiday">holiday</string>
+    <string name="question_holiday_today">today</string>
+    <string name="question_holiday_tomorrow">tomorrow</string>
+    <string name="question_holiday_yesterday">yesterday</string>
+    <string name="answer_holiday_not_found">no holiday</string>
+    <string name="answer_holiday_not_all">Not all days were checked</string>
 </resources>

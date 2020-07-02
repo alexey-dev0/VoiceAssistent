@@ -44,5 +44,11 @@
     <string name="answer_forecast_now">Сейчас где-то</string>
     <string name="answer_forecast_none">Не могу узнать погоду</string>
     <string name="question_translate">переведи</string>
+    <string name="question_holiday">праздник</string>
+    <string name="question_holiday_today">сегодня</string>
+    <string name="question_holiday_tomorrow">завтра</string>
+    <string name="question_holiday_yesterday">вчера</string>
+    <string name="answer_holiday_not_found">не праздничный</string>
+    <string name="answer_holiday_not_all">Не все дни были проверены</string>
 
 </resources>

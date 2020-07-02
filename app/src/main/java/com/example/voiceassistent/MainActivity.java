@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.voiceassistent.entity.MessageEntity;
 import com.example.voiceassistent.helper.DBHelper;
+import com.example.voiceassistent.handler.QuestionHandler;
 import com.example.voiceassistent.model.Message;
 
 import java.text.ParseException;
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         textToSpeech = new TextToSpeech(getApplicationContext(),
                 status -> {
                     if (status != TextToSpeech.ERROR) {
-                        textToSpeech.setLanguage(new Locale("ru"));
+                        textToSpeech.setLanguage(QuestionHandler.getLocale(this));
                     }
                 });
 

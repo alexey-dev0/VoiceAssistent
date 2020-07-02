@@ -13,10 +13,14 @@ public abstract class QuestionHandler {
 
     public QuestionHandler(Context context) {
         this.context = context;
+        this.locale = getLocale(context);
+    }
+
+    public static Locale getLocale(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            this.locale = context.getResources().getConfiguration().getLocales().get(0);
+            return context.getResources().getConfiguration().getLocales().get(0);
         } else {
-            this.locale = context.getResources().getConfiguration().locale;
+            return context.getResources().getConfiguration().locale;
         }
     }
 

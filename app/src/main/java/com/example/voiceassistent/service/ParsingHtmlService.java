@@ -1,8 +1,12 @@
 package com.example.voiceassistent.service;
 
+import android.util.Log;
+
+import org.joda.time.DateTimeComparator;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -17,28 +21,36 @@ public class ParsingHtmlService {
     private static SimpleDateFormat shortSdf = new SimpleDateFormat("dd.MM.yyyy",
             new Locale("ru"));
 
-    public static String getHoliday(String dateString) {
-        Date date = shortStringToDate(dateString);
+    public static String getHoliday(Date date) {
+        Log.w("PARSE", date.toString());
         try {
             Document document = Jsoup.connect(URL).get();
             Element body = document.body();
             for (Element element : body.select("div.month_row")) {
                 String elementDate = element.selectFirst("span").text();
-                if (longStringToDate(elementDate).after(date)) {
-                    return elementDate;
+
+                if (DateTimeComparator.getDateOnlyInstance()
+                        .compare(longStringToDate(elementDate), date) == 0) {
+                    Elements holidays = element.select("div.month_cel>ul>li");
+                    StringBuilder result = new StringBuilder();
+                    for (String holiday : holidays.eachText()) {
+                        if (result.length() != 0) result.append(", ");
+                        result.append(holiday);
+                    }
+                    return result.toString();
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "NONE";
+        return null;
     }
 
-    private static String dateToString(Date date) {
+    public static String dateToString(Date date) {
         return longSdf.format(date);
     }
 
-    private static Date shortStringToDate(String date) {
+    public static Date shortStringToDate(String date) {
         try {
             return shortSdf.parse(date);
         } catch (ParseException e) {
@@ -46,7 +58,7 @@ public class ParsingHtmlService {
         }
     }
 
-    private static Date longStringToDate(String date) {
+    public static Date longStringToDate(String date) {
         try {
             return longSdf.parse(date);
         } catch (ParseException e) {

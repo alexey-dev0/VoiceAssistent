@@ -21,12 +21,12 @@ public class AI {
 
     public static void initialize(Context context) {
         handlers = new ArrayList<>();
+        handlers.add(new QuestionHoliday(context));
         handlers.add(new QuestionStandard(context));
         handlers.add(new QuestionDate(context));
         handlers.add(new QuestionHelp(context));
         handlers.add(new QuestionForecast(context));
         handlers.add(new QuestionTranslate(context));
-        handlers.add(new QuestionHoliday(context));
 
         defaultAnswer = context.getResources().getString(R.string.default_answer);
     }
